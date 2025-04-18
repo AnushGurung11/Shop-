@@ -19,7 +19,7 @@ def read_file(filename):
         #Now loop places each of the items in a tabluar form by left aligining and reserving 20 space 
     for product in items2D: 
          print(f"{product[0]:<20} {product[1]:<20} {product[2]:<20} {product[3]:<20} {product[4]:<20}")
-
+    file.close()
     
 
 
