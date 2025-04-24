@@ -87,13 +87,15 @@ def read_file(filename):
 
 
 
+
+
 #Working interface 
 shop_details()
 choice()
 while True: 
     
     try: 
-        user_choice = int(input("Choose (1-4) : "))
+        user_choice = int(input("""                         Choose (1-4) : """))
         
         if user_choice == 1: 
             display_products()
@@ -101,28 +103,61 @@ while True:
         elif user_choice == 2 : 
             #Now Asking for the Item number and Its Quantity 
             try: 
-                item_number = int(input("Enter the Item number : "))
-                products = read_file("products.txt")
+                item_number = int(input("Enter the Item number : ")) # input for the products 
+                products = read_file("products.txt") # reading the file
 
-                found = False 
-                for product in products:
-                    if item_number == int (product[0]):
+                found = False #Setting the item as not found
+
+                for product in products: #Looping for finding the item 
+
+                    if item_number == int (product[0]): # Case for finding the item 
                         print(f"Selected item is {product[1]}")
-                        found = True 
-                        break 
-                    if not found: 
+                        found = True #Now setting the item as found 
+                        break #Breaking the Loop 
+                    if not found: # If the selected item is not found the Message will show 
                         print("Item Not Found ")
                 
+                #same thing for the Quantity 
                 item_quantity = int (input("Enter the Quantity of Products : "))
                 for product in products: 
 
                     in_stock = False
-                    if item_quantity <= int(product[4]) and item_quantity > 0 : 
+                    if item_quantity <= int(product[4]) and item_quantity > 0 : #Checking the item number 
                         print("We have in stock ")
                         found = True 
                         break 
                     if not in_stock: 
                         print("We Dont have in stock ")
+
+                # Now Taking the Customer name as input 
+                # Name will be used in the billing 
+
+                user_name = input("Enter Your name : ") 
+
+                # Conformation of the purchase 
+                confirmation = input(" Confirm your purchase y/n : ").lower().strip()
+
+                if confirmation == "y": 
+                    #Opening the file and updating the txt file 
+                    print("Purchased Successfully")
+                    #Making a new txt file where you will print the bill 
+                    file = open("Invoice.txt", "w", encoding="utf-8")  # Added encoding for special characters
+                    header = ["SN","Product","Quantity","Per Cost","Country","Total Cost"]
+                    file.write("╔" + "═"*20 + "╦" + "═"*20 + "╦" + "═"*20 + "╦" + "═"*20 + "╦" + "═"*20 + "╦" + "═"*20 + "╗\n")
+                    file.write("║{:^20}║{:^20}║{:^20}║{:^20}║{:^20}║{:^20}║".format(
+                    header[0], header[1], header[2], header[3], header[4], header[5]))
+                    file.write("╠" + "═"*20 + "╬" + "═"*20 + "╬" + "═"*20 + "╬" + "═"*20 + "╬" + "═"*20 + "╬" + "═"*20 + "╣\n")
+                    file.close()
+                
+                elif confirmation == "n": 
+                    print("Confiration declined")
+                 
+                else :
+                    print(" Please Enter a valid input ")
+
+
+
+
                     
 
                 
@@ -157,8 +192,11 @@ while True:
 
 
 
-# In 2 option : When pressed Asking for the item to by and Quantity 
-# Then Showing the selected Item and its quantity . Then also showing the Item selected and quantity 
-# Enter your name and press Confirm 
+ 
+
+
 # Updating the main Stock and aslo Creating a bill 
+# Adding The list that is selcted store it in a new 2D list and later print the same list in the file 
+# Quantity multiple of 3 get 1 free and total becomes 3*Selling price , total goods = 4 , sub to the stock 
+
  
