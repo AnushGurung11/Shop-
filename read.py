@@ -1,5 +1,8 @@
-#Function for the Shop details 
-import write
+
+import write as wf
+
+
+#header of the Shop
 def shop_details (): 
     """Shop Details"""
     print  ("""
@@ -13,6 +16,8 @@ def shop_details ():
 """
     )
 
+
+#Option to choose 
 def choice(): 
     print(
 
@@ -33,8 +38,8 @@ def choice():
     )
 
 
-#A function for the header of the Table 
-def display_products():
+# Displays the header of the table 
+def display_header():
     """Displays the items for the txt file in a tabular format"""
     
     header = ["S.N","Product Name", "Brand", "Per Price", "Stock", "Origin"] #Storing the column name in list 
@@ -47,8 +52,8 @@ def display_products():
 
 
 
-#Function for reading the file 
-def read_file_display(filename): 
+# Displays the products in the table 
+def display_products(filename): 
     """ Open the product file and reads the product """
     
     file = open(filename,"r")  #opening the file  
@@ -69,7 +74,7 @@ def read_file_display(filename):
          
     file.close()
 
-#function For Just reading and returning the 2D list 
+# Return a 2D list by reading the contents of the file  
 def read_file(filename): 
     """ Open the product file and reads the product and returns the 2D list  """
     
@@ -83,17 +88,20 @@ def read_file(filename):
         items2D.append(new_list)
     return items2D
 
-def product_selection():
-    """Takes the Product and its quantity """ 
-    try: 
-    # An array List for Bought Products 
 
-        #Now A loop, if the user wants to enter multiple items 
+# Returns the 2D list of items added to the cart
+def product_cart(fileName):
+
+    try: 
+     
+         
         while True :
                     
         #User Input for the Product 
             item_number = int(input("Enter the Item number : ")) 
-            products = read_file("products.txt") 
+            products = read_file(fileName) 
+
+            
 
             found = False 
 
@@ -101,39 +109,42 @@ def product_selection():
             for product in products:  
                 if item_number == int (product[0]): 
                     found = True     
-                    print(f"Selected item : {product[1]}")
 
                     # Quantity 
                     item_quantity = int (input("Enter the Quantity of Products : "))
                     in_stock = False
                     if item_quantity <= int(product[4]) and item_quantity > 0 : 
-                        print("In Stock")
-                        in_stock = True
-                        break 
+
+                        # Selected Product info 
+                        print(f"Item : {product[1]}")
+                        print(f"Quantity : {item_quantity}")
+
+                        
+
+                        #Confimation for buying
+                        confirmation = input("Confirm (y/n)").strip().lower()
+
+                        if confirmation == "y": 
+                            
+                            in_stock = True
+
+                            return product, item_quantity
+                            
+
+                        elif confirmation == "n": 
+                            print("Transaction Cancelled")
+                            break 
+                        else: 
+                            print(" Wrong input, Transaction declined")
+                            break
+
                     if not in_stock: 
                         print("No in stock")
                         break 
-                            
-                    #For the Conformation of the Item 
-                    user_name = input("Enter Your name : ")
-                    confirmation = input("Check out (y/n) : ").lower()
 
-                            #Check Out Process
-                    if confirmation == "y": 
-                        write.check_out(user_name,product,item_quantity)
-                            
-                    if confirmation == "n": 
-                        print("Purchase Cancelled")
-                        break 
-
-                    else: 
-                        print("Enter a valid input")
-                            
-
-                        #For Item Not Found 
-                if not found: 
-                    print("Item Not Found, Please try again! ")
-                    break
+            if not found: 
+                print("Item Not Found")
+                break
 
     except ValueError: 
         print("""
@@ -141,3 +152,32 @@ def product_selection():
                                                           Please Enter the item number   
                                                         ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
         """)
+
+
+
+
+
+
+
+# Product selection 
+def product_selection():
+    """Takes the Product and its quantity """
+
+    #A 2D list for items in cart 
+    cart_list = []
+    
+    try: 
+        numOfProducts = int(input("Enter the number of Products : "))
+
+        for i in range (1, numOfProducts+1):
+            product_list, quantity = product_cart("products.txt")
+            cart_list.append(product_list)
+            cart_list.append(quantity)
+        
+        #Confirmation 
+        user_name = input("Enter Your name : ").strip().title()
+
+        print(cart_list)
+
+    except ValueError: 
+        print("Please enter numbers only")
