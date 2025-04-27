@@ -95,7 +95,7 @@ choice()
 while True: 
     
     try: 
-        user_choice = int(input("""                         Choose (1-4) : """))
+        user_choice = int(input("Choose (1-4) : "))
         
         if user_choice == 1: 
             display_products()
@@ -103,57 +103,68 @@ while True:
         elif user_choice == 2 : 
             #Now Asking for the Item number and Its Quantity 
             try: 
-                item_number = int(input("Enter the Item number : ")) # input for the products 
-                products = read_file("products.txt") # reading the file
+                # An array List for Bought Products
+                selected_item = [] 
 
-                found = False #Setting the item as not found
+                #Now A loop, if the user wants to enter multiple items 
+                while True :
+                    
+                    #User Input for the Product 
+                    item_number = int(input("Enter the Item number : ")) 
+                    products = read_file("products.txt") 
 
-                for product in products: #Looping for finding the item 
+                    found = False 
 
-                    if item_number == int (product[0]): # Case for finding the item 
-                        print(f"Selected item is {product[1]}")
-                        found = True #Now setting the item as found 
-                        break #Breaking the Loop 
-                    if not found: # If the selected item is not found the Message will show 
-                        print("Item Not Found ")
-                
-                #same thing for the Quantity 
-                item_quantity = int (input("Enter the Quantity of Products : "))
-                for product in products: 
+                    #Verifying the Product 
+                    for product in products:  
+                        if item_number == int (product[0]): 
+                            found = True     
+                            print(f"Selected item : {product[1]}")
 
-                    in_stock = False
-                    if item_quantity <= int(product[4]) and item_quantity > 0 : #Checking the item number 
-                        print("We have in stock ")
-                        found = True 
-                        break 
-                    if not in_stock: 
-                        print("We Dont have in stock ")
+                            # Quantity 
+                            item_quantity = int (input("Enter the Quantity of Products : "))
+                            for product in products:
+                                in_stock = False
+                                if item_quantity <= int(product[4]) and item_quantity > 0 : 
+                                    print("In Stock")
+                                    in_stock = True
+                                    break 
+                                if not in_stock: 
+                                    print("No in stock")
 
-                # Now Taking the Customer name as input 
-                # Name will be used in the billing 
+                            
 
-                user_name = input("Enter Your name : ") 
 
-                # Conformation of the purchase 
-                confirmation = input(" Confirm your purchase y/n : ").lower().strip()
+                            break 
+                        if not found: 
+                            print("Item Not Found, Please try again! ")
+                            break
 
-                if confirmation == "y": 
-                    #Opening the file and updating the txt file 
-                    print("Purchased Successfully")
-                    #Making a new txt file where you will print the bill 
-                    file = open("Invoice.txt", "w", encoding="utf-8")  # Added encoding for special characters
-                    header = ["SN","Product","Quantity","Per Cost","Country","Total Cost"]
-                    file.write("╔" + "═"*20 + "╦" + "═"*20 + "╦" + "═"*20 + "╦" + "═"*20 + "╦" + "═"*20 + "╦" + "═"*20 + "╗\n")
-                    file.write("║{:^20}║{:^20}║{:^20}║{:^20}║{:^20}║{:^20}║".format(
-                    header[0], header[1], header[2], header[3], header[4], header[5]))
-                    file.write("╠" + "═"*20 + "╬" + "═"*20 + "╬" + "═"*20 + "╬" + "═"*20 + "╬" + "═"*20 + "╬" + "═"*20 + "╣\n")
-                    file.close()
-                
-                elif confirmation == "n": 
-                    print("Confiration declined")
-                 
-                else :
-                    print(" Please Enter a valid input ")
+                    # Now Taking the Customer name as input 
+                    # Name will be used in the billing 
+
+                    user_name = input("Enter Your name : ") 
+
+                    # Conformation of the purchase 
+                    confirmation = input(" Confirm your purchase y/n : ").lower().strip()
+
+                    if confirmation == "y": 
+                        #Opening the file and updating the txt file 
+                        print("Purchased Successfully")
+                        #Making a new txt file where you will print the bill 
+                        file = open("Invoice.txt", "w", encoding="utf-8")  # Added encoding for special characters
+                        header = ["SN","Product","Quantity","Per Cost","Country","Total Cost"]
+                        file.write("╔" + "═"*20 + "╦" + "═"*20 + "╦" + "═"*20 + "╦" + "═"*20 + "╦" + "═"*20 + "╦" + "═"*20 + "╗\n")
+                        file.write("║{:^20}║{:^20}║{:^20}║{:^20}║{:^20}║{:^20}║".format(
+                        header[0], header[1], header[2], header[3], header[4], header[5]))
+                        file.write("╠" + "═"*20 + "╬" + "═"*20 + "╬" + "═"*20 + "╬" + "═"*20 + "╬" + "═"*20 + "╬" + "═"*20 + "╣\n")
+                        file.close()
+                    
+                    elif confirmation == "n": 
+                        print("Confiration declined")
+                    
+                    else :
+                        print(" Please Enter a valid input ")
 
 
 
