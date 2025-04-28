@@ -1,5 +1,13 @@
 def market_price(perCost):
-    pass
+    """ calculates the marked price of perCost Item  """
+    perCost = float(perCost)+ 3*float(perCost)
 
-def total_cost(quantity, cost):
-    pass
+    return perCost
+    
+
+def total_cost(quantity, per_cost):
+    """Calculates the total cost of the products"""
+
+    cost = float(per_cost)*int(quantity)
+    return cost 
+

@@ -25,6 +25,8 @@ while True:
         
         #2 will ask for item number, quantity, user name and will create a bill for the user 
         elif user_choice ==2: 
+            
+            #Calls the method for selecting products 
             rf.product_selection()
 
         elif user_choice == 3: 

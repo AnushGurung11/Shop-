@@ -90,68 +90,128 @@ def read_file(filename):
 
 
 # Returns the 2D list of items added to the cart
-def product_cart(fileName):
-
-    try: 
-     
-         
+def product_cart(fileName,counter):  
+        
         while True :
                     
         #User Input for the Product 
             item_number = int(input("Enter the Item number : ")) 
-            products = read_file(fileName) 
 
-            
+            # Gets The 2D list by reading the file 
+            products = read_file(fileName)
 
+            # Selected item is stored here (For multiple Options a 2D list is stored)
+
+
+
+            #Setting the item as not found 
             found = False 
 
-            #Verifying the Product 
+            # Looping to find the product  
             for product in products:  
+
+                #Checking the S.N in list 
                 if item_number == int (product[0]): 
+
+                    # Showing the selected item 
+                    print(f" Selected item : {product[1]}")
+
+                    # is in list 
                     found = True     
 
                     # Quantity 
-                    item_quantity = int (input("Enter the Quantity of Products : "))
-                    in_stock = False
-                    if item_quantity <= int(product[4]) and item_quantity > 0 : 
 
-                        # Selected Product info 
-                        print(f"Item : {product[1]}")
-                        print(f"Quantity : {item_quantity}")
-
+                    try: 
                         
+                        # Try catch : for getting the correct input
+                        item_quantity = int (input("Enter the Quantity of Products : "))
 
-                        #Confimation for buying
-                        confirmation = input("Confirm (y/n)").strip().lower()
+                        # For checking in the stock 
 
-                        if confirmation == "y": 
+                        #First it is not in stock 
+                        in_stock = False
+
+                        # Offer check 
+                        offer_item_check = item_quantity // 3
+
+                        #Free items 
+                        free_items = 0
+
+                        # The product quantity must be in range 
+                        if item_quantity > 0 and item_quantity < int(product[4]) :
+
+                            # marking in stock 
+                            in_stock = True 
                             
-                            in_stock = True
+                            # Checking of there are products to give free or not 
+                            stock = int(product[4]) - item_quantity
 
-                            return product, item_quantity
-                            
+                            # Actual getting free item is greater than the available item in the Stock 
+                            if offer_item_check > stock : 
 
-                        elif confirmation == "n": 
-                            print("Transaction Cancelled")
+                                #You will get what's left in the stock 
+                                getting_offer = offer_item_check - stock 
+
+                                print ( f"You are getting {getting_offer} for free!!!")
+
+                                #passing the free item 
+                                free_items = getting_offer
+
+                            #If item is in stock you will get the actual free quantity 
+                            elif offer_item_check < stock : 
+
+                                print(f"You will get {offer_item_check} for free!!!")
+
+                                free_items = offer_item_check
+
+
+
+                            # Confirming the buying process
+                            confirmation = input("Confirm your purchase(y/n)").strip().lower()
+
+                            # For Yes 
+                            if confirmation == "y": 
+
+                                #Sub total for the products 
+                                sub_total = float(product[3]) * item_quantity
+                                
+                                # First adding the info of sub total and SN number in the product info 
+                                product_list = list(product)
+
+                                #adding sub total in the product info 
+                                product_list.append(str(sub_total))
+
+                                #adding the S.N for the buyer 
+                                product_list.append(str(counter))
+
+                                #adding number of free item 
+                                product_list.append(str(free_items))
+
+                                
+
+                                
+
+                            elif confirmation == "n": 
+                                print("Transaction Cancelled")
+                                break 
+                            else: 
+                                print(" Wrong input, Transaction declined")
+                                break
+
+                        if not in_stock: 
+                            print("Not in stock")
                             break 
-                        else: 
-                            print(" Wrong input, Transaction declined")
-                            break
-
-                    if not in_stock: 
-                        print("No in stock")
-                        break 
+                    
+                    except Exception: 
+                        print(" !!! Only enter numbers ")
 
             if not found: 
                 print("Item Not Found")
                 break
 
-    except ValueError: 
-        print("""
-                                                        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-                                                          Please Enter the item number   
-                                                        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-        """)
+            return product_list
+
+
 
 
 
@@ -163,21 +223,42 @@ def product_cart(fileName):
 def product_selection():
     """Takes the Product and its quantity """
 
-    #A 2D list for items in cart 
+    # ([SN in original list, Product name, Brand , per cost , Stock , origin , Sub total , s.n for buyer, no of free Item ])
+    #Its a 2D list 
     cart_list = []
+
+        #Counter to count the number of inputs in the list 
+    counter = 1 
+    while True:  
+
+        # Asking for the user input for more items 
+        add_more = input(" Add more (y/n) : ").strip().lower()
+
+        #If yes then I will call the function and add the list 
+        #also adds the counter (S.N)
+        if add_more == "y" :
+            cart_list.append(product_cart("products.txt",counter)) 
+
+            
+        elif add_more == "n": 
+            #This will terminate the loop 
+            break 
+
+        else: 
+            # Raise will create an expetion for the invalid input 
+            raise Exception(" Invalid input ")
+
+    print(cart_list)
     
-    try: 
-        numOfProducts = int(input("Enter the number of Products : "))
+    # After the Products are selected and added to the cart_list 
+    # Billing process starts 
 
-        for i in range (1, numOfProducts+1):
-            product_list, quantity = product_cart("products.txt")
-            cart_list.append(product_list)
-            cart_list.append(quantity)
+    #Confirmation
+    # User name for the Bill 
+    # 
+    #  
+    # user_name = input("Enter Your name : ").strip().title()
+
+    # wf.bill(user_name,cart_list)
         
-        #Confirmation 
-        user_name = input("Enter Your name : ").strip().title()
 
-        print(cart_list)
-
-    except ValueError: 
-        print("Please enter numbers only")
