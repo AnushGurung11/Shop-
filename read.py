@@ -159,14 +159,12 @@ def product_cart(fileName,counter):
                                 print(f"You will get {offer_item_check} for free!!!")
 
                                 free_items = offer_item_check
-
-
-                             
+ 
                             # Confirming the buying process
                             confirmation = input("Confirm your purchase(y/n)").strip().lower()
 
                             # For Yes 
-                            if confirmation == "y": 
+                        if confirmation == "y": 
 
                                 #Sub total for the products 
                                 sub_total = float(product[3]) * item_quantity
@@ -187,20 +185,21 @@ def product_cart(fileName,counter):
                                 product_list.append(str(free_items + item_quantity))
 
                                 # Updating the main text file 
-                                wf.update_main(int(free_items+item_quantity))
+                                wf.update_main(int(free_items+item_quantity),fileName)
 
                                 # adding a request in case of additional items 
 
 
                             #if the confirmation is terminated the loop will break    
-                            elif confirmation == "n": 
+                        elif confirmation == "n": 
                                 print("Transaction Cancelled")
                                 break 
 
                             #Wrong input can also termiante the process
-                            else: 
+                        else: 
                                 print(" Wrong input, Transaction declined")
-                                break
+                                return []
+                                
                         
                         #If there are no items in stock it will break the loop 
                         if not in_stock: 

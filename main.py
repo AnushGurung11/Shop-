@@ -4,6 +4,15 @@ import write as wr
 import operation as ops
 
 
+>>>>>>Work : 
+>> Make the bill format more appeling 
+>> Work on the Updating the main txt file 
+>> Display the 3X Price on the screen 
+>> Make calculations accordinglingly 
+>> Work on the Restock Button 
+
+
+
 #Working interface 
 rf.shop_details()
 
@@ -69,10 +78,6 @@ while True:
         
 
 
-# 2 button now when run successfully will returns the list of the product selected 
-# Now The selected item is going to be used to prepare the bill 
-# Bill Contant (For each person a new Bill ) same person will get different bill in new time 
-# 
  
 
 

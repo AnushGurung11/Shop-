@@ -5,9 +5,5 @@ def market_price(perCost):
     return perCost
     
 
-def total_cost(quantity, per_cost):
-    """Calculates the total cost of the products"""
 
-    cost = float(per_cost)*int(quantity)
-    return cost 
 
