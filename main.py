@@ -32,12 +32,35 @@ while True:
         elif user_choice == 3: 
             print("In Progess")
         
+        # To exit the menu
         elif user_choice == 4 : 
-            print("Thank You !")
-            break
 
+            #For the user input 
+            try: 
 
-        
+                #Taking a confimation 
+                terminate = input("Do you want to exit (y/n): ").strip().lower()
+
+                #if y : termiantes the program 
+                if terminate == "y": 
+                    print("Thank You !")
+                    break
+
+                #if n : will not terminate the program 
+                elif terminate == "n": 
+                    print("Termination Denied ")
+                
+                #if the input is any other alphabet the message will show up 
+                else: 
+                    print ("Enter (y/n) : ")
+            
+            except ValueError: 
+                print("Invalid input ")
+
+        # in case user enters number except 1-4
+        else: 
+            print("Please select a valid input form (1-4)")
+
 
     # In case of Type cast error (Alphabets and special characters cannot be int)    
     except ValueError: 

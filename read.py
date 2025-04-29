@@ -100,10 +100,6 @@ def product_cart(fileName,counter):
             # Gets The 2D list by reading the file 
             products = read_file(fileName)
 
-            # Selected item is stored here (For multiple Options a 2D list is stored)
-
-
-
             #Setting the item as not found 
             found = False 
 
@@ -165,7 +161,7 @@ def product_cart(fileName,counter):
                                 free_items = offer_item_check
 
 
-
+                             
                             # Confirming the buying process
                             confirmation = input("Confirm your purchase(y/n)").strip().lower()
 
@@ -187,17 +183,26 @@ def product_cart(fileName,counter):
                                 #adding number of free item 
                                 product_list.append(str(free_items))
 
-                                
+                                #adding the main quantity 
+                                product_list.append(str(free_items + item_quantity))
 
-                                
+                                # Updating the main text file 
+                                wf.update_main(int(free_items+item_quantity))
 
+                                # adding a request in case of additional items 
+
+
+                            #if the confirmation is terminated the loop will break    
                             elif confirmation == "n": 
                                 print("Transaction Cancelled")
                                 break 
+
+                            #Wrong input can also termiante the process
                             else: 
                                 print(" Wrong input, Transaction declined")
                                 break
-
+                        
+                        #If there are no items in stock it will break the loop 
                         if not in_stock: 
                             print("Not in stock")
                             break 
@@ -205,11 +210,18 @@ def product_cart(fileName,counter):
                     except Exception: 
                         print(" !!! Only enter numbers ")
 
+            #if at the begining the product is not found it will show up 
             if not found: 
                 print("Item Not Found")
                 break
 
+            # at the end it will return the list 
             return product_list
+    
+
+
+
+
 
 
 
@@ -231,25 +243,49 @@ def product_selection():
     counter = 1 
     while True:  
 
-        # Asking for the user input for more items 
-        add_more = input(" Add more (y/n) : ").strip().lower()
-
         #If yes then I will call the function and add the list 
         #also adds the counter (S.N)
-        if add_more == "y" :
-            cart_list.append(product_cart("products.txt",counter)) 
+        cart_list.append(product_cart("products.txt",counter)) 
+        counter += 1
 
-            
-        elif add_more == "n": 
-            #This will terminate the loop 
-            break 
+        try: 
+            # Asking for the user input for more items 
+            add_more = input(" Add more (y/n) : ").strip().lower()
 
-        else: 
-            # Raise will create an expetion for the invalid input 
-            raise Exception(" Invalid input ")
+            if add_more == "y": 
+                continue
+                
+            elif add_more == "n": 
+                print("Thank You !")
+                #This will terminate the loop 
+                break 
 
-    print(cart_list)
+            else: 
+                # Raise will create an expetion for the invalid input 
+                raise Exception(" Invalid input ")
+        
+        except Exception: 
+            print("Enter a valid Input")
+
+
+    # Taking user name 
+    try: 
+        #Preplacing the ":" because the txt will not allow it
+        user_name = input("Enter your name : ").strip().title().replace(":","_")
+
+        #Calling a bill method 
+        wf.invoice(user_name, cart_list)
+
+    except Exception: 
+        print ("Enter a valid input")
+
+
+
+
     
+    
+   # print(cart_list)
+
     # After the Products are selected and added to the cart_list 
     # Billing process starts 
 
