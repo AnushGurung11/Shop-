@@ -185,7 +185,7 @@ def product_cart(fileName,counter):
                                 product_list.append(str(free_items + item_quantity))
 
                                 # Updating the main text file 
-                                wf.update_main(int(free_items+item_quantity),fileName)
+                                wf.update_main(int(free_items+item_quantity),str(item_number))
 
                                 # adding a request in case of additional items 
 

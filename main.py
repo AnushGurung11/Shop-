@@ -4,12 +4,12 @@ import write as wr
 import operation as ops
 
 
->>>>>>Work : 
->> Make the bill format more appeling 
->> Work on the Updating the main txt file 
->> Display the 3X Price on the screen 
->> Make calculations accordinglingly 
->> Work on the Restock Button 
+# >>>>>>Work : 
+# >> Make the bill format more appeling 
+# >> Work on the Updating the main txt file 
+# >> Display the 3X Price on the screen 
+# >> Make calculations accordinglingly 
+# >> Work on the Restock Button 
 
 
 

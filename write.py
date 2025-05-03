@@ -66,9 +66,49 @@ def invoice(user_name, cart_list):
 
 
 # A function to update the main products.txt file 
-def update_main(quantity,fileName): 
-    pass
-    #
+#Here the total quantity and product list in of the stock file and the item number is being passed
+def update_main(quantity,sn):
+    
+   
+    
+
+    #Opening the file in both read and write mode 
+    # file = open("products.txt","r+")
+
+    #Now checking through each line and checking for the sn (Serial number)
+    # Step 1: Read the file
+    with open('products.txt', 'r') as file:
+        lines = file.readlines()
+
+    # Step 2: Update the specific line
+    for i in range(len(lines)):
+        if lines[i].startswith(sn):
+            parts = lines[i].strip().split(',')
+            parts[-2] = str(int(parts[-2])-quantity)  
+            # Manually rebuild the line
+            new_line = (parts[0] + ',' + parts[1] + ',' + parts[2] + ',' + parts[3] + ',' + parts[4] + ',' + parts[5] + '\n')
+            lines[i] = new_line
+            break
+
+    # Step 3: Write updated lines back to the file
+    with open('products.txt', 'w') as file:
+        file.writelines(lines)
+
+        
+    
+
+
+
+    
+    
+
+
+
+    #What can I do over here is 
+    # Read the file and take the Line which as the exact Indexing entered by the user at first and then change the stock number by the total quantity 
+    # I need to pass the SN and then check the Item accordingly 
+
+    
     
         
 
