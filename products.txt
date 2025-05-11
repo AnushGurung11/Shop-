@@ -2,3 +2,7 @@
 2,Skin Cleanser, Cetaphil, 100, 280, Switzerland
 3,Sunscreen, Aqualogica, 200, 700, India
 4,SundarCream, Ponds, 100, 6, Nepal
+
+5,A,C,1.0,1,C
+6,1,1,1.0,1,1
+7,1,1,1.0,1,1
