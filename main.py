@@ -1,60 +1,70 @@
-
+# Importing other operational files
 import read as rf
 import write as wf
 import operation as ops
 
-
-#Displays the shop info
+# Displaying the main header of the shop 
 rf.shop_header()
 
-
-
+# The program will run till the user wants to stop 
 while True:
     
-   
+    #Menu option 
     rf.choice()
 
-     
+    # Using try except exception handeling in the block of code
     try:
         
-        user_choice = int(input("Choose a number form (1 - 4) : ")) # Check 
+        # taking user input for the main operation 
+        user_choice = int(input("Choose a number form (1 - 4) : ")) 
 
         
         if user_choice == 1: 
-            rf.display_products("products.txt") #Check
+            
+            # Displaying the products present in the main inventory 
+            rf.display_products("products.txt") 
         
-         
         elif user_choice ==2: 
             
+            # Displaying the products in inventory 
             rf.display_products("products.txt")
 
+            # Method called for selecting the products 
             rf.product_selection("products.txt")
 
         
         elif user_choice == 3: 
 
+            # Displays the restock options 
             rf.restock_display()
 
             try: 
                 choice = int(input(">> "))
                 
+                # Conditional branching for the user input 
                 if choice == 1: 
-                     
+                    
+                    # Displays the products in main inventory 
                     rf.display_products("products.txt")
 
+                    # 2D list for the multiple selections 
                     restocks = []
 
+                    # For serializing the items 
                     counter = 1
                         
-                    while True: 
+                    # Runs till user finishes adding items   
+                    while True:
+
                         item_number = int(input(">> Product Number: "))
 
+                        # Method returns 2D list reading main inventory 
                         products = rf.read_file("products.txt")
 
                         found = False
 
+                        # checks each list form the 2D list 
                         for each in products: 
-                            
                             
                             if item_number == int(each[0]): 
                                 print(f"-> Item: {each[1]}")
@@ -64,7 +74,7 @@ while True:
                                 item_quantity = int(input(">> Product Quantity: "))
 
                                 if item_quantity < 0: 
-                                    print("!! Sorry quantity cannot be reduced")
+                                    print("\n❌  Sorry, quantity cannot be reduced. Please adjust your order. ❌\n")
                                     break 
                                 else: 
                                     
@@ -79,39 +89,40 @@ while True:
                                     restock_list.append(item_quantity)
                                     restock_list.append(str(ops.sub_total(float(item_quantity), float(restock_list[2]))))
                                     
+                                    # Adding to the 2D list 
                                     restocks.append(restock_list)
-                                    print(restocks)
-                                    
 
-
-                                                        
+                        # If the products is not found                                    
                         if not found:  
-                            print("!! Product does not exist. ")         
+                            print("\n⚠️  Product does not exist. Please check your selection. ⚠️\n")         
                             break 
 
                         add_more = input(">> Want to add more (y/n)").strip().lower()
 
                         if add_more == "y": 
 
+                            # increasing the counter by 1
                             counter += 1 
-                            
-
                             continue
 
                         elif add_more == "n": 
                            
+                           # Creating an invoice for the store 
                             wf.invoice("WeCare","9819819811",restocks)
                            
+                           # prints the content in WeCare text file in the terminal 
                             rf.read_file_contents("WeCare.txt")
                            
-                            print(">>Stock Updated successfully<<")
                             break                    
                         
                 elif choice == 2: 
+                    
+                    # Adding new products in the main inventory 
                     rf.new_arrivals()
 
                 elif choice == 3: 
                     
+                    # For the confirmation 
                     print("------------>Confirm your exit (y/n).")
                     confirm = input("------->").strip().lower()
 
@@ -123,12 +134,15 @@ while True:
                         continue
 
                     else: 
-                        print("****** Wrong input exiting the restock option ******")
+                        print("❌ Invalid input. Exiting Restock Option... ❌")
                         break
                 else : 
-                    print("!! Select an option form the menu. ")
+                    print("\n❌  Please select a valid option from the menu. (1-4) ❌")
+            
+            # Handeling Value error 
             except ValueError: 
-                print("!! Enter a valid input. ")
+                # Handled when an wrong data type is being cased to another
+                print("⚠️  ::::::: Please Enter a Valid Input ::::::: ⚠️")
             
             
         elif user_choice == 4 : 
@@ -137,32 +151,32 @@ while True:
             try: 
 
                 #Taking a confimation 
-                terminate = input("Do you want to exit (y/n): ").strip().lower()
+                terminate = input("\n⚠️  Do you want to exit the program? (y/n): ").strip().lower()
 
                 #if y : termiantes the program 
                 if terminate == "y": 
-                    print("Thank You !")
+                    print("\n🎉  Thank You for your purchase! Have a great day! 🎉\n")
                     break
 
                 #if n : will not terminate the program 
                 elif terminate == "n": 
-                    print("Termination Denied ")
+                    print("\n❌  Termination Denied! Please try again. ❌\n")
                 
                 #if the input is any other alphabet the message will show up 
                 else: 
-                    print ("Enter (y/n) : ")
+                    print ("🔄  Enter your choice (y/n): ")
             
             except ValueError: 
-                print("Invalid input ")
+                print("⚠️  ::::::: Please Enter a Valid Input ::::::: ⚠️")
 
         # in case user enters number except 1-4
         else: 
-            print("Please select a valid input form (1-4)")
+            print("⚠️  Please select a valid option from the menu (1 - 4) ⚠️")
 
 
     # In case of Type cast error (Alphabets and special characters cannot be int)    
     except ValueError: 
-        print("Choose Only Form 1,2,3 and 4")
+        print("⚠️  Please select a valid option from the menu (1 - 4) ⚠️")
 
         
 
