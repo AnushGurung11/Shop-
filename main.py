@@ -85,7 +85,7 @@ while True:
                                     break 
                                 else: 
                                     
-                                    wf.restock_existing_items(products,item_quantity)
+                                    wf.restock_existing_items(item_number,products,item_quantity)
 
                                     #Creating a list to pass for the billing / invoice 
                                     restock_list = list()
@@ -114,12 +114,14 @@ while True:
 
                         elif add_more == "n": 
                             break   
-
-                        # Creating an invoice for the store 
-                        wf.invoice("WeCare","9819819811",restocks)
-                           
-                        # prints the content in WeCare text file in the terminal 
-                        rf.read_file_contents("WeCare.txt")                 
+                       
+                    wf.invoice("WeCare","9819819811",restocks) 
+                    
+            
+                    
+                    
+                    
+                                    
                         
                 elif choice == 2: 
                     

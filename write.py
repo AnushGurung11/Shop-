@@ -145,16 +145,15 @@ def append_products(restock):
             file.write(new_line)
 
 
-def restock_existing_items (products, item_quantity): 
+def restock_existing_items (item_number,products, item_quantity): 
     """Restocking the existing item"""
 
-    
     updated_lines = []
      
     for line in products: 
-
-        # Updating the quantity in main inventory               
-        line[4] = str(int(line[4]) + item_quantity)
+        if item_number == int(line[0]):
+            # Updating the quantity in main inventory               
+            line[4] = str(int(line[4]) + item_quantity)
 
         # using join function with coma in the middle 
         new_line = ','.join(line) +'\n'
