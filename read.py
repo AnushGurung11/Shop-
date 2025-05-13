@@ -11,10 +11,10 @@ def shop_header ():
     # multi string 
     print  ("""
                                                             
-                                                                        ✨  WeCare  ✨         
-                                                                    -------------------------                                                 
-                                                                       Matepani-12, Pokhara  
-                                                                        Contact: 981981981     
+                                        ✨ WeCare ✨         
+                                   ----------------------                                               
+                                    Matepani-12, Pokhara  
+                                     Contact: 981981981     
         """
     )
 
@@ -23,17 +23,17 @@ def choice():
 
     print(
         """
-                                                                    ______________________________
-                                                                    |        * SHOP MENU *       |
-                                                                    |____________________________|
-                                                                    | 1. 👀  View Products       |
-                                                                    |                            |
-                                                                    | 2. 💰  Buy Products        |
-                                                                    |                            |
-                                                                    | 3. 🔄  Restock Products    |
-                                                                    |                            |
-                                                                    | 4. ❌  Exit                |
-                                                                    |____________________________|
+                                ______________________________
+                                |        * SHOP MENU *       |
+                                |____________________________|
+                                | 1. 👀  View Products       |
+                                |                            |
+                                | 2. 💰  Buy Products        |
+                                |                            |
+                                | 3. 🔄  Restock Products    |
+                                |                            |
+                                | 4. ❌  Exit                |
+                                |____________________________|
         """
 
     )
@@ -42,6 +42,7 @@ def display_products(filename):
     """ Open the product file and reads the product """
 
     # Displaying the title in table format 
+    print("\n")
     print("╔" + "═"*20 + "╦" + "═"*20 + "╦" + "═"*20 + "╦" + "═"*20 + "╦" + "═"*20 + "╦" + "═"*20 + "╗")
     print("║{:^20}║{:^20}║{:^20}║{:^20}║{:^20}║{:^20}║".format(
         "S.N","Product Name", "Brand", "Per Price", "Stock", "Origin"))
@@ -94,30 +95,30 @@ def  product_selection(filename):
 
         try: 
                 # Asking for the user input for more items 
-            add_more = input("Add more (y/n) : \n").strip().lower()
+            add_more = input("\nAdd more (y/n) : \n").strip().lower()
 
     	    # Will continue the loop 
             if add_more == "y": 
                 continue
                     
             elif add_more == "n": 
-                print("Thank You !\n")
+                print("\n🎁 Thank you for your purchase\n")
                 #This will terminate the loop 
                 break 
 
             else: 
                 # Raise will create an expetion for the invalid input 
-                raise Exception(" ⚠️  ::::::: Please Enter a Valid Input ::::::: ⚠️")
+                raise Exception("\n ⚠️  ::::::: Please Enter a Valid Input ::::::: ⚠️")
             
         except Exception: 
-                print("⚠️  ::::::: Please Enter a Valid Input ::::::: ⚠️")
+                print("\n⚠️  ::::::: Please Enter a Valid Input ::::::: ⚠️")
 
 
     # Taking user name 
     try: 
         #Preplacing the ":" because the txt will not allow it
-        user_name = input("🌟 >> Enter your name: ").strip().title().replace(":", "_")
-        phone = int(input("📱 >> Enter your phone number: "))
+        user_name = input("\n🌟 >> Enter your name: ").strip().title().replace(":", "_")
+        phone = int(input("\n📱 >> Enter your phone number: "))
 
 
         #Validating the cart 
@@ -127,12 +128,12 @@ def  product_selection(filename):
             wf.invoice(user_name, phone, valid_cart)
             
         else:
-            print("No valid products were selected. Empty invoice Generated")
+            print("\nX-------No valid products were selected. Empty invoice Generated--------X")
 
 
     except ValueError:
         # If the data type is incorrect  
-        print ("⚠️  ::::::: Please Enter a Valid Input ::::::: ⚠️")
+        print ("\n  ::::::: Please Enter a Valid Input ::::::: ")
 
 def product_cart(fileName, counter):
     """This function will ask for the items to buy and the quentity and retiurns the 1D list """
@@ -141,25 +142,30 @@ def product_cart(fileName, counter):
     while True:
 
         try:
-            print("Item number")
-            item_number = int(input("--->"))
+            print("\n🛍️  Item Number:")
 
+            item_number = int(input("->  "))
+
+            # Reading the main text file and listing the elements in a 2D list
             products = read_file(fileName)
 
             found = False
 
+            # Looping through each elements
             for product in products:
 
                 if item_number == int(product[0]):
                     found = True
-                    print(f"->Selected item: {product[1]}")
 
-                    print("Enter the Quantity of Products")
-                    item_quantity = int(input("--->"))
+                    print(f"\n Selected Item: {product[1]}\n")
+
+                    print("\n🧮 Enter the quantity of products:")
+
+                    item_quantity = int(input("->  "))
 
                     # Checking the items for the free items 
                     if item_quantity <= 0 or item_quantity > int(product[4]):
-                        print("⚠️    !!Not in stock or invalid quantity.    ⚠️")
+                        print("\n    !!Not in stock or invalid quantity.    ")
                         break
 
                     stock = int(product[4]) - item_quantity
@@ -167,17 +173,20 @@ def product_cart(fileName, counter):
                     free_items = 0
 
                     if stock == 0:
-                        print("❌ -> Sorry, there are no free items left. <- ❌")
+                        print("\n -> Sorry, there are no items left. <- ")
 
                     elif offer_item_check > stock:
-                        print(f"🎁 >> You will get {stock} for free!!! 🎉")
+                        print(f"\n >> You will get {stock} items as per the scheme!!! <<\n")
                         free_items = stock
 
                     else:
                         free_items = offer_item_check
-                        print(f"🎉 >> Congratulations! You get {free_items} items for free. << 🎉")
+                        print(f"\n >>  You get {free_items} items as per the scheme. <<\n ")
 
-                    confirmation = input("Confirm your purchase (y/n): ").lower().strip()
+                    
+                    confirmation= input("->  Confirm purchase? (y/n): ").strip().lower()
+                    
+
 
                     # If the user confirm append in the list 
                     if confirmation == "y":
@@ -196,28 +205,28 @@ def product_cart(fileName, counter):
                         return product_list
                     
                     elif confirmation == "n":
-                        print("❌ Transaction Cancelled ❌")
+                        print("\n******** Transaction Cancelled ******** \n")
                         return []
 
                     else:
-                        print("🚫 Wrong input, Transaction declined 🚫")
+                        print("\n XXX- Wrong input, Transaction declined -XXX")
                         return []
 
             if not found:
-                print("🔍 Item Not Found 🔍")
+                print("\n Item Not Found 🔍?")
                 return []
 
         except ValueError: 
-            print("⚠️  ::::::: Please Enter a Valid Input ::::::: ⚠️")
+            print("\n  ::::::: Please Enter a Valid Input ::::::: ")
 
 def restock_display():
     """Displays the header of the restocking options"""
     print("""
-    =====================================
-    |     1. Restock Existing Item      |
-    |     2. Restock New Item           |
-    |     3. Exit                       |
-    =====================================
+=====================================
+|     1. Restock Existing Item      |
+|     2. Restock New Item           |
+|     3. Exit                       |
+=====================================
 """)
     
 
@@ -233,11 +242,11 @@ def read_file_contents(filename):
 
     except FileNotFoundError:
         # If file not found this exception is shown 
-        print(f"❌ Error: File not found at path: {filename} ❌")
+        print(f"\n Error: File not found at path: {filename} ")
 
     except Exception as e:
         # For any other exceptions 
-        print(f"⚠️ An error occurred: {e} ⚠️")
+        print(f"\n⚠️ An error occurred: {e} ")
 
 def new_arrivals(): 
     """This function will add new items in the inventory."""
@@ -251,19 +260,19 @@ def new_arrivals():
 
         try: 
 
-            print("Product name")
+            print("\n🛍️  Item Name: ")
             name = input("---->").strip().title()
 
-            print("Brand")
+            print("\n Item Brand: ")
             brand = input("---->").strip().title()
 
-            print("Rate")
+            print("\nItem Rate:")
             rate = float(input("----->"))
 
-            print("Quantity")
+            print("\nItem Quantity")
             quantity = int(input("---->"))
 
-            print("Made in ")
+            print("\nOrigin: ")
             country = input("---->").strip().title()
 
             # New list to store the update details 
@@ -288,7 +297,7 @@ def new_arrivals():
 
             arrivals_bill.append(bill_list)
 
-            print("Add more(y/n)")
+            print("\nAdd more(y/n)")
             more = input("---->").strip().lower()
 
             if more == "y": 
@@ -296,23 +305,25 @@ def new_arrivals():
                 counter += 1
                 continue
 
-            elif more == "n": 
+            elif more == "n":
+                print()
+                break 
 
-                name = "WeCare"
-                number = 9819819811
+            name = "WeCare"
+            number = 9819819811
 
-                # Updating the inventory 
-                wf.append_products(arrivals)
+            # Updating the inventory 
+            wf.append_products(arrivals)
 
-                # Invoice creating 
-                wf.invoice(name,number,arrivals_bill)
+            # Invoice creating 
+            wf.invoice(name,number,arrivals_bill)
 
-                # Reading the contents of the file 
-                read_file_contents(f"{name}.txt")
-                break
+            # Reading the contents of the file 
+            read_file_contents(f"{name}.txt")
+                
 
         except ValueError: 
-            print("⚠️  ::::::: Please Enter a Valid Input ::::::: ⚠️")
+            print("\n  ::::::: Please Enter a Valid Input ::::::: ")
     
 
         

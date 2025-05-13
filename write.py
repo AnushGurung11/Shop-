@@ -165,7 +165,7 @@ def restock_existing_items (products, item_quantity):
     # Opening the file in write mode    
     file = open("products.txt","w") 
     file.writelines(updated_lines)
-    print("--------------Successfully restocked--------------")
+    print("\n✔️  Successfully Restocked  ✔️")
         
         
                     

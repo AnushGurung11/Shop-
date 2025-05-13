@@ -16,7 +16,11 @@ while True:
     try:
         
         # taking user input for the main operation 
-        user_choice = int(input("Choose a number form (1 - 4) : ")) 
+        print("=============================")
+        print("    Choose an Option (1-4) ")
+        print("=============================")
+
+        user_choice = int(input("->  ")) 
 
         
         if user_choice == 1: 
@@ -39,6 +43,9 @@ while True:
             rf.restock_display()
 
             try: 
+                print("=============================")
+                print(" Select restock option (1-3) ")
+                print("=============================")
                 choice = int(input(">> "))
                 
                 # Conditional branching for the user input 
@@ -56,7 +63,7 @@ while True:
                     # Runs till user finishes adding items   
                     while True:
 
-                        item_number = int(input(">> Product Number: "))
+                        item_number = int(input("\n🛍️  Item Number: "))
 
                         # Method returns 2D list reading main inventory 
                         products = rf.read_file("products.txt")
@@ -67,11 +74,11 @@ while True:
                         for each in products: 
                             
                             if item_number == int(each[0]): 
-                                print(f"-> Item: {each[1]}")
+                                print(f"\n Selected Item: {each[1]}")
 
                                 found = True 
-
-                                item_quantity = int(input(">> Product Quantity: "))
+                                
+                                item_quantity = int(input("\n🧮 Item Quantity: "))
 
                                 if item_quantity < 0: 
                                     print("\n❌  Sorry, quantity cannot be reduced. Please adjust your order. ❌\n")
@@ -97,7 +104,7 @@ while True:
                             print("\n⚠️  Product does not exist. Please check your selection. ⚠️\n")         
                             break 
 
-                        add_more = input(">> Want to add more (y/n)").strip().lower()
+                        add_more = input("\n-> Want to add more (y/n)").strip().lower()
 
                         if add_more == "y": 
 
@@ -106,14 +113,13 @@ while True:
                             continue
 
                         elif add_more == "n": 
+                            break   
+
+                        # Creating an invoice for the store 
+                        wf.invoice("WeCare","9819819811",restocks)
                            
-                           # Creating an invoice for the store 
-                            wf.invoice("WeCare","9819819811",restocks)
-                           
-                           # prints the content in WeCare text file in the terminal 
-                            rf.read_file_contents("WeCare.txt")
-                           
-                            break                    
+                        # prints the content in WeCare text file in the terminal 
+                        rf.read_file_contents("WeCare.txt")                 
                         
                 elif choice == 2: 
                     
@@ -123,21 +129,21 @@ while True:
                 elif choice == 3: 
                     
                     # For the confirmation 
-                    print("------------>Confirm your exit (y/n).")
-                    confirm = input("------->").strip().lower()
+                    print("\n--->Confirm your exit (y/n).")
+                    confirm = input("->").strip().lower()
 
                     if confirm == "y": 
-                        print("Thank You")
+                        print("\nThank You\n")
                         break
                     
                     elif confirm == "n":
                         continue
 
                     else: 
-                        print("❌ Invalid input. Exiting Restock Option... ❌")
+                        print("\n❌ Invalid input. Exiting Restock Option... ❌\mn")
                         break
                 else : 
-                    print("\n❌  Please select a valid option from the menu. (1-4) ❌")
+                    print("\n❌  Please select a valid option from the menu. (1-4) ❌\n")
             
             # Handeling Value error 
             except ValueError: 
@@ -147,28 +153,23 @@ while True:
             
         elif user_choice == 4 : 
 
-            #For the user input 
-            try: 
+            #Taking a confimation 
+            terminate = input("\n⚠️  Do you want to exit the program? (y/n): ").strip().lower()
 
-                #Taking a confimation 
-                terminate = input("\n⚠️  Do you want to exit the program? (y/n): ").strip().lower()
+            #if y : termiantes the program 
+            if terminate == "y": 
+                print("\n🎉  Thank You for your purchase! Have a great day! 🎉\n")
+                break
 
-                #if y : termiantes the program 
-                if terminate == "y": 
-                    print("\n🎉  Thank You for your purchase! Have a great day! 🎉\n")
-                    break
-
-                #if n : will not terminate the program 
-                elif terminate == "n": 
-                    print("\n❌  Termination Denied! Please try again. ❌\n")
+            #if n : will not terminate the program 
+            elif terminate == "n": 
+                print("\n❌  Termination Denied! Please try again. ❌\n")
                 
-                #if the input is any other alphabet the message will show up 
-                else: 
-                    print ("🔄  Enter your choice (y/n): ")
+            #if the input is any other alphabet the message will show up 
+            else: 
+                print ("🔄  Enter your choice (y/n): ")
             
-            except ValueError: 
-                print("⚠️  ::::::: Please Enter a Valid Input ::::::: ⚠️")
-
+           
         # in case user enters number except 1-4
         else: 
             print("⚠️  Please select a valid option from the menu (1 - 4) ⚠️")
