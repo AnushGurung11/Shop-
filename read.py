@@ -252,14 +252,11 @@ def new_arrivals():
     """This function will add new items in the inventory."""
 
     counter = 1
-    # Creating two 2D list, one for appending to the main stock and another one for billing 
     arrivals = []
     arrivals_bill =[]
 
     while True:
-
         try: 
-
             print("\n🛍️  Item Name: ")
             name = input("---->").strip().title()
 
@@ -276,55 +273,38 @@ def new_arrivals():
             country = input("---->").strip().title()
 
             # New list to store the update details 
-            arrival_list = []
-            arrival_list.append(counter)
-            arrival_list.append(name)
-            arrival_list.append(brand)
-            arrival_list.append(rate)
-            arrival_list.append(quantity)
-            arrival_list.append(country)
-
+            arrival_list = [counter, name, brand, rate, quantity, country]
             arrivals.append(arrival_list)
 
-            # New List for biling details
-            bill_list = []
-            bill_list.append(counter)
-            bill_list.append(name)
-            bill_list.append(rate)
-            bill_list.append("0")
-            bill_list.append(quantity)
-            bill_list.append(str(ops.sub_total(float(rate),quantity)))
-
+            # New List for billing details
+            bill_list = [counter, name, rate, "0", quantity, str(ops.sub_total(rate, quantity))]
             arrivals_bill.append(bill_list)
 
             print("\nAdd more(y/n)")
             more = input("---->").strip().lower()
 
             if more == "y": 
-
                 counter += 1
                 continue
-
             elif more == "n":
                 print()
                 break 
 
-            name = "WeCare"
-            number = 9819819811
-
-            # Updating the inventory 
-            wf.append_products(arrivals)
-
-            # Invoice creating 
-            wf.invoice(name,number,arrivals_bill)
-
-            # Reading the contents of the file 
-            read_file_contents(f"{name}.txt")
-                
-
         except ValueError: 
             print("\n  ::::::: Please Enter a Valid Input ::::::: ")
+
     
+    name = "WeCare"
+    number = 9819819811
+
+    # Updating the inventory 
+    wf.append_products(arrivals)
+
+    # Invoice creating 
+    wf.invoice(name, number, arrivals_bill)
+
+
+
 
         
 

@@ -103,8 +103,9 @@ while True:
                         if not found:  
                             print("\n⚠️  Product does not exist. Please check your selection. ⚠️\n")         
                             break 
-
-                        add_more = input("\n-> Want to add more (y/n)").strip().lower()
+                        
+                        print("\nWant to add more (y/n)")
+                        add_more = input("\n-> ").strip().lower()
 
                         if add_more == "y": 
 
@@ -169,7 +170,7 @@ while True:
                 
             #if the input is any other alphabet the message will show up 
             else: 
-                print ("🔄  Enter your choice (y/n): ")
+                print ("\n❌ Invalid Input ❌\n")
             
            
         # in case user enters number except 1-4
